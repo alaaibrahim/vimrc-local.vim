@@ -1,0 +1,11 @@
+# vim swap files
+*~
+*.swp
+*.swo
+
+# vim plugins
+.netrwhist
+
+# OSX Finder Desktop Service Store
+.DS_Store
+._.DS_Store

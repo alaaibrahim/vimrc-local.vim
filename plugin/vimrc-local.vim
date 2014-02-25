@@ -3,10 +3,10 @@
 " Description: 
 " Last Modified: February 24, 2014
 
-if exists('did_vimrc-local') || &cp || version < 700
+if exists('did_vimrc_local') || &cp || version < 700
     finish
 endif
-let did_vimrc-local = 1
+let did_vimrc_local = 1
 
 " Do we have local vimrc?
 if filereadable('.vimrc.local')

@@ -15,7 +15,7 @@ if filereadable('.vimrc.local')
 else
     " Are we in a git repo
     let dir = getcwd()
-    exec 'cd "' . expand("%:p:h") . '"'
+    exec 'cd ' . fnameescape(expand("%:p:h"))
     let gitdir = system('git rev-parse --show-toplevel')
     if !v:shell_error
         " We are in a git repo
@@ -24,5 +24,5 @@ else
             exec 'source ' . vimfile
         endif
     endif
-    exec 'cd "' . dir . '"'
+    exec 'cd ' . fnameescape(dir)
 endif

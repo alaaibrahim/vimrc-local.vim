@@ -17,7 +17,7 @@ else
     let dir = getcwd()
     exec 'cd ' . fnameescape(expand("%:p:h"))
     let gitdir = system('git rev-parse --show-toplevel')
-    if !v:shell_error
+    if !v:shell_error && gitdir != ""
         " We are in a git repo
         exec 'let vimfile = "' . split(matchstr(gitdir, "\\S\\+\n"),"\n")[0] . '/' . '.vimrc.local"'
         if filereadable(vimfile)

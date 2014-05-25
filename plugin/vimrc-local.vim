@@ -8,6 +8,10 @@ if exists('did_vimrc_local') || &cp || version < 700
 endif
 let did_vimrc_local = 1
 
+if has("autocmd")
+    autocmd BufNewFile,BufRead .vimrc.local set filetype=vim
+endif
+
 " Do we have local vimrc?
 if filereadable('.vimrc.local')
     " If so, go ahead and load it.

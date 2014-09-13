@@ -1,7 +1,7 @@
 " File: vimrc-local.vim
 " Author: Ala Ibrahim
 " Description: 
-" Last Modified: February 24, 2014
+" Last Modified: September 12, 2014
 
 if exists('did_vimrc_local') || &cp || version < 700
     finish
@@ -18,15 +18,15 @@ if filereadable('.vimrc.local')
     source .vimrc.local
 else
     " Are we in a git repo
-    let dir = getcwd()
+    let s:dir = getcwd()
     exec 'cd ' . fnameescape(expand("%:p:h"))
-    let gitdir = system('git rev-parse --show-toplevel')
-    if !v:shell_error && gitdir != ""
+    let s:gitdir = system('git rev-parse --show-toplevel')
+    if !v:shell_error && s:gitdir != ""
         " We are in a git repo
-        exec 'let vimfile = "' . split(matchstr(gitdir, "\\S\\+\n"),"\n")[0] . '/' . '.vimrc.local"'
-        if filereadable(vimfile)
-            exec 'source ' . vimfile
+        exec 'let s:vimfile = "' . split(matchstr(s:gitdir, "\\S\\+\n"),"\n")[0] . '/' . '.vimrc.local"'
+        if filereadable(s:vimfile)
+            exec 'source ' . s:vimfile
         endif
     endif
-    exec 'cd ' . fnameescape(dir)
+    exec 'cd ' . fnameescape(s:dir)
 endif

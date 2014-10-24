@@ -19,14 +19,17 @@ if filereadable('.vimrc.local')
 else
     " Are we in a git repo
     let s:dir = getcwd()
-    exec 'cd ' . fnameescape(expand("%:p:h"))
-    let s:gitdir = system('git rev-parse --show-toplevel')
-    if !v:shell_error && s:gitdir != ""
-        " We are in a git repo
-        exec 'let s:vimfile = "' . split(matchstr(s:gitdir, "\\S\\+\n"),"\n")[0] . '/' . '.vimrc.local"'
-        if filereadable(s:vimfile)
-            exec 'source ' . s:vimfile
+    let s:parent_dir = expand("%:p:h")
+    if isdirectory(s:parent_dir)
+        exec 'cd ' . fnameescape(s:parent_dir)
+        let s:gitdir = system('git rev-parse --show-toplevel')
+        if !v:shell_error && s:gitdir != ""
+            " We are in a git repo
+            exec 'let s:vimfile = "' . split(matchstr(s:gitdir, "\\S\\+\n"),"\n")[0] . '/' . '.vimrc.local"'
+            if filereadable(s:vimfile)
+                exec 'source ' . s:vimfile
+            endif
         endif
+        exec 'cd ' . fnameescape(s:dir)
     endif
-    exec 'cd ' . fnameescape(s:dir)
 endif

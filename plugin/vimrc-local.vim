@@ -3,12 +3,12 @@
 " Description: 
 " Last Modified: September 12, 2014
 
-if exists('did_vimrc_local') || &cp || version < 700
+if exists('g:did_vimrc_local') || &compatible || v:version < 700
     finish
 endif
-let did_vimrc_local = 1
+let g:did_vimrc_local = 1
 
-if has("autocmd")
+if has('autocmd')
     autocmd BufNewFile,BufRead .vimrc.local set filetype=vim
 endif
 
@@ -18,18 +18,15 @@ if filereadable('.vimrc.local')
     source .vimrc.local
 else
     " Are we in a git repo
-    let s:dir = getcwd()
-    let s:parent_dir = expand("%:p:h")
+    let s:parent_dir = expand('%:p:h')
     if isdirectory(s:parent_dir)
-        exec 'cd ' . fnameescape(s:parent_dir)
-        let s:gitdir = system('git rev-parse --show-toplevel')
-        if !v:shell_error && s:gitdir != ""
+        let s:gitdir = system('git rev-parse --show-toplevel -C ' . s:parent_dir)
+        if !v:shell_error && s:gitdir !=# ''
             " We are in a git repo
-            exec 'let s:vimfile = "' . split(matchstr(s:gitdir, "\\S\\+\n"),"\n")[0] . '/' . '.vimrc.local"'
+            let s:vimfile = split(matchstr(s:gitdir, "\\S\\+\n"),"\n")[0] . '/.vimrc.local'
             if filereadable(s:vimfile)
                 exec 'source ' . s:vimfile
             endif
         endif
-        exec 'cd ' . fnameescape(s:dir)
     endif
 endif

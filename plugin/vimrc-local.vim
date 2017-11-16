@@ -16,7 +16,7 @@ endif
 if filereadable('.vimrc.local')
     " If so, go ahead and load it.
     source .vimrc.local
-else
+elseif executable('git')
     " Are we in a git repo
     let s:parent_dir = expand('%:p:h')
     if isdirectory(s:parent_dir)
